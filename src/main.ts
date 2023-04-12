@@ -6,3 +6,10 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
+
+// TODO:
+// -events
+// -offers
+// -Redis
+// -Docker
+// -Readme
