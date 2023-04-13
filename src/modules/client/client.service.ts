@@ -4,10 +4,14 @@ import { CreateClientDto } from './dtos/client.create.dto';
 import { UpdateClientDto } from './dtos/client.update.dto';
 import { Model } from 'mongoose';
 import { Client, ClientDocument } from './client.entity';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class ClientService {
-  constructor(@InjectModel(Client.name) private model: Model<ClientDocument>) {}
+  constructor(
+    @InjectModel(Client.name) private model: Model<ClientDocument>,
+    private eventEmitter: EventEmitter2,
+  ) {}
 
   async create(dto: CreateClientDto): Promise<Client> {
     const newEntity = await new this.model(dto);
@@ -46,6 +50,9 @@ export class ClientService {
     if (!deletedEntity) {
       throw new NotFoundException(`Client #${id} not found`);
     }
+
+    this.eventEmitter.emit('client.deleted', deletedEntity._id);
+
     return deletedEntity;
   }
 }
