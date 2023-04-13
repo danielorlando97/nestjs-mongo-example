@@ -4,17 +4,19 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateRestaurantDto } from './dtos/restaurant.create.dto';
-import { UpdateRestaurantDto } from './dtos/restaurant.update.dto';
+import { CreateRestaurantDto } from '../dtos/restaurant.create.dto';
+import { UpdateRestaurantDto } from '../dtos/restaurant.update.dto';
 import { Model } from 'mongoose';
-import { Restaurant, RestaurantDocument } from './restaurant.entity';
-import { ClientService } from '../client/client.service';
+import { Restaurant, RestaurantDocument } from '../restaurant.entity';
+import { ClientService } from '../../client/client.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class RestaurantService {
   constructor(
     @InjectModel(Restaurant.name) private model: Model<RestaurantDocument>,
     private clientService: ClientService,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async create(dto: CreateRestaurantDto): Promise<Restaurant> {
@@ -58,13 +60,19 @@ export class RestaurantService {
     if (!deletedEntity) {
       throw new NotFoundException(`Restaurant #${id} not found`);
     }
+
+    this.eventEmitter.emit('restaurant.deleted', deletedEntity._id);
+
     return deletedEntity;
   }
 
   async addClient(resId: string, clientId: string) {
     // Check the client or throw exception
-    await this.clientService.getOne(clientId);
+    const client = await this.clientService.getOne(clientId);
     const existingRest = await this.getOne(resId);
+
+    if (client.age < 18)
+      throw new BadRequestException('Minors are not allowed in the restaurant');
 
     if (existingRest.capacity <= existingRest.Clients.length)
       throw new BadRequestException('The restaurant is fully');

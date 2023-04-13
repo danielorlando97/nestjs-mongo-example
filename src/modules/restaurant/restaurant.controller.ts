@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { CreateRestaurantDto } from './dtos/restaurant.create.dto';
 import { UpdateRestaurantDto } from './dtos/restaurant.update.dto';
-import { RestaurantService } from './restaurant.service';
+import { RestaurantService } from './services/restaurant.service';
 
 @Controller('restaurant')
 export class RestaurantController {
