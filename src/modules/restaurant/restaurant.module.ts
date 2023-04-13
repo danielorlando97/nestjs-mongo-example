@@ -7,6 +7,7 @@ import { ClientModule } from '../client/client.module';
 
 @Module({
   providers: [RestaurantService],
+  exports: [RestaurantService],
   controllers: [RestaurantController],
   imports: [
     ClientModule,
