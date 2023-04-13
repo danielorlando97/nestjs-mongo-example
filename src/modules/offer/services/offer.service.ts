@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateOfferDto } from './dtos/offer.create.dto';
-import { UpdateOfferDto } from './dtos/offer.update.dto';
+import { CreateOfferDto } from '../dtos/offer.create.dto';
+import { UpdateOfferDto } from '../dtos/offer.update.dto';
 import { Model } from 'mongoose';
-import { Offer, OfferDocument } from './offer.entity';
-import { ClientService } from '../client/client.service';
-import { RestaurantService } from '../restaurant/restaurant.service';
+import { Offer, OfferDocument } from '../offer.entity';
+import { ClientService } from '../../client/client.service';
+import { RestaurantService } from '../../restaurant/services/restaurant.service';
 
 @Injectable()
 export class OfferService {
@@ -21,21 +21,42 @@ export class OfferService {
   ): Promise<any> {
     if (clientId) await this.clientService.getOne(clientId);
     if (resId) await this.resService.getOne(resId);
+
+    return [clientId, resId];
   }
 
   async create(dto: CreateOfferDto): Promise<Offer> {
-    await this.checkRelationsOrFail(dto.clientId, dto.resId);
+    const [Client, Restaurant] = await this.checkRelationsOrFail(
+      dto.clientId,
+      dto.resId,
+    );
 
-    const newEntity = await new this.model(dto);
+    const newEntity = await new this.model({
+      Client: Client,
+      Restaurant: Restaurant,
+      ...dto,
+    });
+
     return newEntity.save();
   }
 
   async update(id: string, dto: UpdateOfferDto): Promise<Offer> {
-    await this.checkRelationsOrFail(dto.clientId, dto.resId);
+    const [Client, Restaurant] = await this.checkRelationsOrFail(
+      dto.clientId,
+      dto.resId,
+    );
 
-    const existingEntity = await this.model.findByIdAndUpdate(id, dto, {
-      new: true,
-    });
+    const existingEntity = await this.model.findByIdAndUpdate(
+      id,
+      {
+        Client: Client,
+        Restaurant: Restaurant,
+        ...dto,
+      },
+      {
+        new: true,
+      },
+    );
 
     if (!existingEntity) {
       throw new NotFoundException(`Offer #${id} not found`);
@@ -52,7 +73,12 @@ export class OfferService {
   }
 
   async getOne(id: string): Promise<Offer> {
-    const existingEntity = await this.model.findById(id).exec();
+    const existingEntity = await this.model
+      .findById(id)
+      .populate('Client')
+      .populate('Restaurant')
+      .exec();
+
     if (!existingEntity) {
       throw new NotFoundException(`Offer #${id} not found`);
     }

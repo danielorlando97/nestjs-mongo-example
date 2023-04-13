@@ -15,10 +15,10 @@ export class Offer {
   @Prop({ required: true })
   description: string;
 
-  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: Client.name }])
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Client.name })
   Client: Client;
 
-  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: Restaurant.name }])
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Restaurant.name })
   Restaurant: Restaurant;
 
   @Prop({ default: now() })
