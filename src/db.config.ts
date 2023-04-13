@@ -1,13 +1,14 @@
 // src/config/config.service.ts
 import { MongooseModule } from '@nestjs/mongoose';
 import { DynamicModule } from '@nestjs/common';
+import { BullModule } from '@nestjs/bull';
 
 require('dotenv').config();
 
-class ConfigService {
-  constructor(private env: { [k: string]: string | undefined }) {}
+abstract class ConfigService {
+  constructor(protected env: { [k: string]: string | undefined }) {}
 
-  private getValue(key: string, throwOnMissing = true): string {
+  protected getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
     if (!value && throwOnMissing) {
       throw new Error(`config error - missing env.${key}`);
@@ -21,7 +22,11 @@ class ConfigService {
     return this;
   }
 
-  public getDBConfig(): DynamicModule {
+  public abstract getConfig(): DynamicModule;
+}
+
+class MongoConfig extends ConfigService {
+  public getConfig(): DynamicModule {
     const mongoConnString = this.getValue('MONGO_CONN_STRING');
     const mongoDB = this.getValue('MONGO_DATABASE');
 
@@ -31,9 +36,26 @@ class ConfigService {
   }
 }
 
-const configService = new ConfigService(process.env).ensureValues([
+export const configDataBase = new MongoConfig(process.env).ensureValues([
   'MONGO_CONN_STRING',
   'MONGO_DATABASE',
 ]);
 
-export { configService };
+class QueueRedisConfig extends ConfigService {
+  public getConfig(): DynamicModule {
+    const redisHost = this.getValue('REDIS_HOST');
+    const redisPort = this.getValue('REDIS_PORT');
+
+    return BullModule.forRoot({
+      redis: {
+        host: redisHost,
+        port: +redisPort,
+      },
+    });
+  }
+}
+
+export const configQueue = new QueueRedisConfig(process.env).ensureValues([
+  'REDIS_HOST',
+  'REDIS_PORT',
+]);
