@@ -24,6 +24,6 @@ For the execution of the project we defined a docker configuration that connects
 $> docker-compose up
 ```
 
-Finally for the testing process we attached a **Postman** collection with which you can test each of the endpoints.
+Finally for the testing process we attached a [**Postman**](./crypto-api.postman_collection.json) collection with which you can test each of the endpoints.
 
 _Note_: All the functionalities that occur in the system background can be seen in the api logs.

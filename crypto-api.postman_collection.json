@@ -1,0 +1,442 @@
+{
+	"info": {
+		"_postman_id": "635a05a0-cbd0-42bd-b51e-c347ee9031ca",
+		"name": "crypto-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17992084"
+	},
+	"item": [
+		{
+			"name": "clients",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n  \"name\": \"Daniel\",\n  \"email\": \"daniel@crypto.com\",\n  \"phone\": \"+5353029857\",\n  \"age\": 18\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/client",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/client/{{client_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"client",
+								"{{client_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/client",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Daniel Orlando\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/client/{{client_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"client",
+								"{{client_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/client/{{client_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"client",
+								"{{client_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "offer",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"{{client_id}}\",\n  \"resId\": \"{{res_id}}\",\n  \"description\": \"Arros con pollo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/order",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/order/{{order_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"order",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/order",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientId\": \"{{client_id}}\",\n  \"resId\": \"{{res_id}}\",\n  \"description\": \"Arros con pollo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/order/{{order_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"order",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/order/{{order_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"order",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "restaurant",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n  \"name\": \"Daniel\",\n  \"address\": \"En la esquina\",\n  \"capacity\": 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/restaurant",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"restaurant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/restaurant/{{res_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"restaurant",
+								"{{res_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/restaurant",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"restaurant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"La Bodega de Daniel\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/restaurant/{{res_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"restaurant",
+								"{{res_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/client/{{client_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"client",
+								"{{client_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Client",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://{{api_host}}:{{api_port}}/restaurant/{{res_id}}/add-client/{{client_id}}",
+							"protocol": "http",
+							"host": [
+								"{{api_host}}"
+							],
+							"port": "{{api_port}}",
+							"path": [
+								"restaurant",
+								"{{res_id}}",
+								"add-client",
+								"{{client_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_host",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "api_port",
+			"value": "3000",
+			"type": "string"
+		},
+		{
+			"key": "client_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "res_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
