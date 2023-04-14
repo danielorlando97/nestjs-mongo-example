@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  api:
+    build: .
+    container_name: nestjs-api
+    env_file:
+      - ./.docker.env
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb
+      - redis
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_volume:/data/db
+
+  redis:
+    container_name: redis_db
+    image: redis:6-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_volume:/data
+
+volumes:
+  redis_volume:
+   driver: locals
+  mongodb_volume:
+   driver: locals
