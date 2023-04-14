@@ -37,6 +37,8 @@ export class OrderService {
       dto.resId,
     );
 
+    await this.resService.containClientOrFail(dto.resId, dto.clientId);
+
     const newEntity = await new this.model({
       Client: Client,
       Restaurant: Restaurant,
@@ -62,8 +64,18 @@ export class OrderService {
       dto.resId,
     );
 
-    const existingEntity = await this.model.findByIdAndUpdate(
-      id,
+    const existingEntity = await this.model.findById(id);
+
+    if (!existingEntity) {
+      throw new NotFoundException(`Order #${id} not found`);
+    }
+
+    await this.resService.containClientOrFail(
+      dto.resId || (existingEntity.Restaurant as any),
+      dto.clientId || (existingEntity.Client as any),
+    );
+
+    existingEntity.updateOne(
       {
         Client: Client,
         Restaurant: Restaurant,
@@ -74,10 +86,7 @@ export class OrderService {
       },
     );
 
-    if (!existingEntity) {
-      throw new NotFoundException(`Order #${id} not found`);
-    }
-    return existingEntity;
+    return existingEntity.save();
   }
 
   async getAll(): Promise<Order[]> {

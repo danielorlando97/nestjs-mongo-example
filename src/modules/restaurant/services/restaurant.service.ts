@@ -84,6 +84,23 @@ export class RestaurantService {
     );
   }
 
+  async containClientOrFail(resId: string, clientId: string) {
+    const restaurant = await this.model
+      .findOne({
+        _id: resId,
+        Clients: {
+          $in: [clientId],
+        },
+      })
+      .exec();
+
+    if (!restaurant) {
+      throw new NotFoundException(
+        `The client ${clientId} isn't in the restaurant ${resId}`,
+      );
+    }
+  }
+
   async removeClient(resId: string, clientId: string) {
     return this.model.findByIdAndUpdate(
       resId,

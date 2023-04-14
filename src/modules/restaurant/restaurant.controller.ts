@@ -46,8 +46,8 @@ export class RestaurantController {
     return this.service.addClient(id, clientId);
   }
 
-  @Patch('/:id/remove-owner/:clientId')
-  removeOwner(@Param('id') id: string, @Param('clientId') clientId: string) {
-    return this.service.removeClient(id, clientId);
-  }
+  // @Patch('/:id/remove-owner/:clientId')
+  // removeOwner(@Param('id') id: string, @Param('clientId') clientId: string) {
+  //   return this.service.removeClient(id, clientId);
+  // }
 }
